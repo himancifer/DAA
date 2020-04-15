@@ -62,18 +62,24 @@ public class Dijkstra{
 
         System.out.println("Enter the total number of vertices :: ");
         int n = sc.nextInt();
+        System.out.println("Enter the total number of edges :: ");
+        int edges = sc.nextInt();
 
         int graph[][] = new int[n][n]; 
 
+
+        for(int i = 0 ; i<n; i++)
+            for(int j=0; j<n ; j++)
+                graph[i][j] = 0;
+
         System.out.println("Enter the vertices and their weight (u,v,w) :: ");
-        for(int i=0;i<n;i++)
+        for(int i=0;i<edges;i++)
         {
             System.out.println(i + " triple ::");
             int u = sc.nextInt();
             int v = sc.nextInt();
             int w = sc.nextInt();
             graph[u][v] = w;
-            graph[v][u] = w;
         }
         
         Dijkstra obj = new Dijkstra(); 
