@@ -1,12 +1,12 @@
 import java.util.*;
 
-class Knapsack{
+class SubsetSum{
 
     static int max(int a,int b){
         return a>b ? a : b;
     }
     
-    static int[][] OPT(int n, int weight[], int value[],int w){
+    static int[][] OPT(int n, int weight[],int w){
         int [][] table = new int[n+1][w+1];
 
         for(int row = 1; row<=n; row++){
@@ -14,7 +14,7 @@ class Knapsack{
                 if(weight[row-1] > col)
                     table[row][col] = table[row-1][col];
                 else
-                    table[row][col] = max(table[row-1][col], value[row-1] + table[row-1][col-weight[row-1]]);
+                    table[row][col] = max(table[row-1][col], weight[row-1] + table[row-1][col-weight[row-1]]);
             }
         }
 
@@ -42,33 +42,35 @@ class Knapsack{
             }
             row--;
         }
+
+        Collections.sort(items);
+
         return items;
     }
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of items");
         int n = sc.nextInt();
-        int [] value = new int[n];
         int [] weight = new int[n];
         for (int i = 0;i<n;i++){
-            System.out.println("Enter the weight and corresponding value for the item "+(i+1)+" : ");
+            System.out.println("Enter the weight for the item "+(i+1)+" : ");
             weight[i] = sc.nextInt(); 
-            value[i] = sc.nextInt();
         }
 
-        System.out.println("Enter the weight of the knapsack");
+        System.out.println("Enter the required weight");
         int w = sc.nextInt();
-        int [][] table  = OPT(n,weight,value,w);
+        int [][] table  = OPT(n,weight,w);
 
         displayTable(table,n,w);
-        System.out.println("Maximum value of the items in the knapsack = "+ table[n][w]);
+        System.out.println("Maximum value of weight in the subset = "+ table[n][w]);
        
         try{
             List<Integer> items = displayItems(table,weight,n,w);
-        
-            ListIterator<Integer> it = items.listIterator();
             
-            System.out.println("Items in the knapsack are : ");
+            ListIterator<Integer> it = items.listIterator();
+
+            
+            System.out.println("Subset of items : ");
             while(it.hasNext()){
                 System.out.print(it.next()  + " ");
             }
