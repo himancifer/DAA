@@ -31,7 +31,9 @@ public class WeightedIntervalScheduling {
         for(int i = 1 ; i < intervals.length; i++){
             dp[i] = Math.max(intervals[i].weight, dp[i-1]);
             for(int j = i-1; j >=0 ; j--){
+                //If the intervals are compatible
                 if(intervals[j].end <= intervals[i].start){
+                    //max(best after exluding,best after including)
                     dp[i] = Math.max(dp[i],intervals[i].weight + dp[j]);
                     break;
                 }
@@ -39,9 +41,14 @@ public class WeightedIntervalScheduling {
         }
 
         int maximumWeight = Integer.MIN_VALUE;
+        //Find maximum weight and print the OPT array:
+        System.out.println("Optimal Array");
         for(int weight : dp){
+            System.out.print(weight + " ");
             maximumWeight = Math.max(maximumWeight,weight);
         }
+
+        System.out.println();
 
         return maximumWeight;
     }
